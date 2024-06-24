@@ -4,12 +4,22 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
+//using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using DocumentFormat.OpenXml.Packaging;
+
+using SixLabors.ImageSharp;
+using SixLabors.Fonts;
+using SixLabors.ImageSharp.Drawing;
+using SixLabors.ImageSharp.Drawing.Shapes;
+using SixLabors.ImageSharp.Drawing.Processing;
+
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using DocumentFormat.OpenXml.Office2016.Drawing.Command;
 
 // 200e lrm - LTR
 // 200f rlm - RTL
@@ -120,7 +130,7 @@ namespace OpenXmlPowerTools
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class ImageInfo
     {
-        public Bitmap Bitmap;
+        public Image Bitmap;
         public XAttribute ImgStyleAttribute;
         public string ContentType;
         public XElement DrawingElement;
@@ -2248,7 +2258,7 @@ namespace OpenXmlPowerTools
                 if (_knownFamilies == null)
                 {
                     _knownFamilies = new HashSet<string>();
-                    var families = FontFamily.Families;
+                    var families = SystemFonts.Families;
                     foreach (var fam in families)
                         _knownFamilies.Add(fam.Name);
                 }
@@ -2279,7 +2289,7 @@ namespace OpenXmlPowerTools
             FontFamily ff;
             try
             {
-                ff = new FontFamily(fontName);
+                ff = SystemFonts.Get(fontName);
             }
             catch (ArgumentException)
             {
@@ -3079,7 +3089,7 @@ namespace OpenXmlPowerTools
                 return null;
 
             using (var partStream = imagePart.GetStream())
-            using (var bitmap = new Bitmap(partStream))
+            using (var bitmap = Image.Load(partStream))
             {
                 if (extentCx != null && extentCy != null)
                 {
@@ -3145,7 +3155,7 @@ namespace OpenXmlPowerTools
                 {
                     try
                     {
-                        using (var bitmap = new Bitmap(partStream))
+                        using (var bitmap = Image.Load(partStream))
                         {
                             var imageInfo = new ImageInfo()
                             {

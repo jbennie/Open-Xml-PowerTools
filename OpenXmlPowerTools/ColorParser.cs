@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System.Drawing;
+//using System.Drawing;
+using SixLabors.ImageSharp;
+ 
 
 namespace OpenXmlPowerTools
 {
@@ -9,16 +11,16 @@ namespace OpenXmlPowerTools
     {
         public static Color FromName(string name)
         {
-            return Color.FromName(name);
+            return Color.Parse(name);
         }
 
         public static bool TryFromName(string name, out Color color)
         {
             try
             {
-                color = Color.FromName(name);
+                color = Color.Parse(name);
 
-                return color.IsNamedColor;
+                return true ;
             }
             catch
             {

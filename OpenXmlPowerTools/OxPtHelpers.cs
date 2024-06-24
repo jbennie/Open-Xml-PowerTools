@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
+//using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -14,7 +14,11 @@ using DocumentFormat.OpenXml.Validation;
 using OpenXmlPowerTools;
 using System.Text;
 using DocumentFormat.OpenXml;
-using System.Drawing.Imaging;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Advanced;
+using SixLabors.ImageSharp;
+//using System.Drawing.Imaging;
 
 namespace OpenXmlPowerTools
 {
@@ -53,7 +57,8 @@ namespace OpenXmlPowerTools
 
                     if (!string.IsNullOrEmpty(foreColor))
                     {
-                        int colorValue = ColorParser.FromName(foreColor).ToArgb();
+                        int colorValue = (int)ColorParser.FromName(foreColor).ToPixel<Argb32>().PackedValue;
+                        //ToArgb();
                         if (colorValue == 0)
                             throw new OpenXmlPowerToolsException(String.Format("Add-DocxText: The specified color {0} is unsupported, Please specify the valid color. Ex, Red, Green", foreColor));
 
@@ -66,7 +71,7 @@ namespace OpenXmlPowerTools
 
                     if (!string.IsNullOrEmpty(backColor))
                     {
-                        int colorShade = ColorParser.FromName(backColor).ToArgb();
+                        int colorShade = (int) ColorParser.FromName(backColor).ToPixel<Argb32>().PackedValue;//ToArgb();
                         if (colorShade == 0)
                             throw new OpenXmlPowerToolsException(String.Format("Add-DocxText: The specified color {0} is unsupported, Please specify the valid color. Ex, Red, Green", foreColor));
 
@@ -374,46 +379,51 @@ AAsACwDBAgAAbCwAAAAA";
                                 localDirInfo.Create();
                             ++imageCounter;
                             string extension = imageInfo.ContentType.Split('/')[1].ToLower();
-                            ImageFormat imageFormat = null;
-                            if (extension == "png")
+                            string imageFileName = Path.Combine(imageDirectoryName, "image" + imageCounter.ToString() );
+
+
+
+                            // saving with the modified extension will implicitly call the correct encoder.
+                            // remap file extensions to supported types
+                            switch (extension)
                             {
-                                // Convert png to jpeg.
-                                extension = "gif";
-                                imageFormat = ImageFormat.Gif;
-                            }
-                            else if (extension == "gif")
-                                imageFormat = ImageFormat.Gif;
-                            else if (extension == "bmp")
-                                imageFormat = ImageFormat.Bmp;
-                            else if (extension == "jpeg")
-                                imageFormat = ImageFormat.Jpeg;
-                            else if (extension == "tiff")
-                            {
-                                // Convert tiff to gif.
-                                extension = "gif";
-                                imageFormat = ImageFormat.Gif;
-                            }
-                            else if (extension == "x-wmf")
-                            {
-                                extension = "wmf";
-                                imageFormat = ImageFormat.Wmf;
+                                case "gif":
+                                    {
+
+                                        imageFileName += ".gif";
+                                        try
+                                        {
+
+                                            imageInfo.Bitmap.SaveAsGif(imageFileName);
+                                         //   imageInfo.Bitmap.Dispose();
+                                        }
+                                        catch (System.Runtime.InteropServices.ExternalException)
+                                        {
+                                            return null;
+                                        }
+                                        break;
+
+                                    }
+
+                                default:
+                                    {
+                                        imageFileName += ".png";
+                                        try
+                                        {
+                                            imageInfo.Bitmap.SaveAsPng(imageFileName);
+                                         //   imageInfo.Bitmap.Dispose();
+                                        }
+                                        catch (System.Runtime.InteropServices.ExternalException)
+                                        {
+                                            return null;
+                                        }
+
+                                        break;
+                                    }
                             }
 
-                            // If the image format isn't one that we expect, ignore it,
-                            // and don't return markup for the link.
-                            if (imageFormat == null)
-                                return null;
-
-                            string imageFileName = imageDirectoryName + "/image" +
-                                imageCounter.ToString() + "." + extension;
-                            try
-                            {
-                                imageInfo.Bitmap.Save(imageFileName, imageFormat);
-                            }
-                            catch (System.Runtime.InteropServices.ExternalException)
-                            {
-                                return null;
-                            }
+                           
+                           
                             XElement img = new XElement(Xhtml.img,
                                 new XAttribute(NoNamespace.src, imageFileName),
                                 imageInfo.ImgStyleAttribute,

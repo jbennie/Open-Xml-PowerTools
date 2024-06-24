@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using DocumentFormat.OpenXml.Packaging;
 using OpenXmlPowerTools;
+using SixLabors.ImageSharp;
 using Xunit;
 
 #if DO_CONVERSION_VIA_WORD
@@ -205,41 +206,11 @@ namespace OxPt
                                 localDirInfo.Create();
                             ++imageCounter;
                             string extension = imageInfo.ContentType.Split('/')[1].ToLower();
-                            ImageFormat imageFormat = null;
-                            if (extension == "png")
-                            {
-                                // Convert png to jpeg.
-                                extension = "gif";
-                                imageFormat = ImageFormat.Gif;
-                            }
-                            else if (extension == "gif")
-                                imageFormat = ImageFormat.Gif;
-                            else if (extension == "bmp")
-                                imageFormat = ImageFormat.Bmp;
-                            else if (extension == "jpeg")
-                                imageFormat = ImageFormat.Jpeg;
-                            else if (extension == "tiff")
-                            {
-                                // Convert tiff to gif.
-                                extension = "gif";
-                                imageFormat = ImageFormat.Gif;
-                            }
-                            else if (extension == "x-wmf")
-                            {
-                                extension = "wmf";
-                                imageFormat = ImageFormat.Wmf;
-                            }
-
-                            // If the image format isn't one that we expect, ignore it,
-                            // and don't return markup for the link.
-                            if (imageFormat == null)
-                                return null;
-
-                            string imageFileName = imageDirectoryName + "/image" +
-                                imageCounter.ToString() + "." + extension;
+             
+                            string imageFileName = imageDirectoryName + "/image" + imageCounter.ToString() + ".png";
                             try
                             {
-                                imageInfo.Bitmap.Save(imageFileName, imageFormat);
+                                imageInfo.Bitmap.SaveAsPng(imageFileName);
                             }
                             catch (System.Runtime.InteropServices.ExternalException)
                             {
@@ -298,41 +269,11 @@ namespace OxPt
                                 localDirInfo.Create();
                             ++imageCounter;
                             string extension = imageInfo.ContentType.Split('/')[1].ToLower();
-                            ImageFormat imageFormat = null;
-                            if (extension == "png")
-                            {
-                                // Convert png to jpeg.
-                                extension = "gif";
-                                imageFormat = ImageFormat.Gif;
-                            }
-                            else if (extension == "gif")
-                                imageFormat = ImageFormat.Gif;
-                            else if (extension == "bmp")
-                                imageFormat = ImageFormat.Bmp;
-                            else if (extension == "jpeg")
-                                imageFormat = ImageFormat.Jpeg;
-                            else if (extension == "tiff")
-                            {
-                                // Convert tiff to gif.
-                                extension = "gif";
-                                imageFormat = ImageFormat.Gif;
-                            }
-                            else if (extension == "x-wmf")
-                            {
-                                extension = "wmf";
-                                imageFormat = ImageFormat.Wmf;
-                            }
-
-                            // If the image format isn't one that we expect, ignore it,
-                            // and don't return markup for the link.
-                            if (imageFormat == null)
-                                return null;
-
-                            string imageFileName = imageDirectoryName + "/image" +
-                                imageCounter.ToString() + "." + extension;
+                           
+                            string imageFileName = imageDirectoryName + "/image" + imageCounter.ToString() + ".png";
                             try
                             {
-                                imageInfo.Bitmap.Save(imageFileName, imageFormat);
+                                imageInfo.Bitmap.SaveAsPng(imageFileName);
                             }
                             catch (System.Runtime.InteropServices.ExternalException)
                             {

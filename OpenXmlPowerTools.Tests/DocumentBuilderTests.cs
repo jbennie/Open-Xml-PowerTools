@@ -272,7 +272,8 @@ namespace OxPt
             var rootTempDir = TestUtil.TempDir;
             var thisTestTempDir = new DirectoryInfo(Path.Combine(rootTempDir.FullName, testId));
             if (thisTestTempDir.Exists)
-                Assert.True(false, "Duplicate test id: " + testId);
+                Assert.Fail("Duplicate test id: " + testId);
+               // Assert.True(false, "Duplicate test id: " + testId);
             else
                 thisTestTempDir.Create();
             var tempDirFullName = thisTestTempDir.FullName;
@@ -826,7 +827,8 @@ namespace OxPt
             var rootTempDir = TestUtil.TempDir;
             var thisTestTempDir = new DirectoryInfo(Path.Combine(rootTempDir.FullName, testId));
             if (thisTestTempDir.Exists)
-                Assert.True(false, "Duplicate test id: " + testId);
+                Assert.Fail("Duplicate test id: " + testId);        
+               //Assert.True(false, "Duplicate test id: " + testId);
             else
                 thisTestTempDir.Create();
             var tempDirFullName = thisTestTempDir.FullName;
@@ -878,7 +880,8 @@ namespace OxPt
                         sb.Append(item.Description).Append(Environment.NewLine);
                     }
                     var s = sb.ToString();
-                    Assert.True(false, s);
+                    Assert.Fail(s);
+                   // Assert.True(false, s);
                 }
             }
         }

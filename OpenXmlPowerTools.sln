@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenXmlPowerTools", "OpenXmlPowerTools\OpenXmlPowerTools.csproj", "{6F957FF3-AFCC-4D69-8FBC-71AE21BC45C9}"
 EndProject
@@ -24,8 +24,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HtmlConverter01", "OpenXmlPowerToolsExamples\HtmlConverter01\HtmlConverter01.csproj", "{BC9E7408-508D-482D-8602-96E76ACBB5EA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListItemRetriever01", "OpenXmlPowerToolsExamples\ListItemRetriever01\ListItemRetriever01.csproj", "{04935FA6-E48B-496F-8D6A-41A59232303D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarkupSimplifierApp", "OpenXmlPowerToolsExamples\MarkupSimplifierApp\MarkupSimplifierApp.csproj", "{0CCE83BA-8B8B-4B98-8846-B62A61FDF170}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetricsGetter01", "OpenXmlPowerToolsExamples\MetricsGetter01\MetricsGetter01.csproj", "{ED37372C-DFBF-4720-BD4B-CE1415961038}"
 EndProject
@@ -52,8 +50,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpreadsheetWriter01", "OpenXmlPowerToolsExamples\SpreadsheetWriter01\SpreadsheetWriter01.csproj", "{0911F996-DF86-4FB1-A1CE-0539599EC0E0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpreadsheetWriter02", "OpenXmlPowerToolsExamples\SpreadsheetWriter02\SpreadsheetWriter02.csproj", "{DF1D84AF-27B8-4F87-A673-CCFADC3AAF02}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenXmlPowerTools.Tests", "OpenXmlPowerTools.Tests\OpenXmlPowerTools.Tests.csproj", "{B1328B70-33B8-40E0-A729-38C34D659B5C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentAssembler02", "OpenXmlPowerToolsExamples\DocumentAssembler02\DocumentAssembler02.csproj", "{D6DFAC7C-82F4-4318-A9F0-6450D2945D96}"
 EndProject
@@ -84,6 +80,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		rules.ruleset = rules.ruleset
 		stylecop.json = stylecop.json
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenXmlPowerTools.Tests", "OpenXmlPowerTools.Tests\OpenXmlPowerTools.Tests.csproj", "{77528C1F-2E37-4D8C-BE2C-33683B1EB9AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -135,10 +133,6 @@ Global
 		{04935FA6-E48B-496F-8D6A-41A59232303D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04935FA6-E48B-496F-8D6A-41A59232303D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04935FA6-E48B-496F-8D6A-41A59232303D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0CCE83BA-8B8B-4B98-8846-B62A61FDF170}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0CCE83BA-8B8B-4B98-8846-B62A61FDF170}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0CCE83BA-8B8B-4B98-8846-B62A61FDF170}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0CCE83BA-8B8B-4B98-8846-B62A61FDF170}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ED37372C-DFBF-4720-BD4B-CE1415961038}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ED37372C-DFBF-4720-BD4B-CE1415961038}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED37372C-DFBF-4720-BD4B-CE1415961038}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -191,10 +185,6 @@ Global
 		{DF1D84AF-27B8-4F87-A673-CCFADC3AAF02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF1D84AF-27B8-4F87-A673-CCFADC3AAF02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF1D84AF-27B8-4F87-A673-CCFADC3AAF02}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B1328B70-33B8-40E0-A729-38C34D659B5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1328B70-33B8-40E0-A729-38C34D659B5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1328B70-33B8-40E0-A729-38C34D659B5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1328B70-33B8-40E0-A729-38C34D659B5C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D6DFAC7C-82F4-4318-A9F0-6450D2945D96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D6DFAC7C-82F4-4318-A9F0-6450D2945D96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6DFAC7C-82F4-4318-A9F0-6450D2945D96}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -231,6 +221,10 @@ Global
 		{3D1C46E1-7A9E-4A4B-8D95-68613603DEDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D1C46E1-7A9E-4A4B-8D95-68613603DEDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D1C46E1-7A9E-4A4B-8D95-68613603DEDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77528C1F-2E37-4D8C-BE2C-33683B1EB9AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77528C1F-2E37-4D8C-BE2C-33683B1EB9AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77528C1F-2E37-4D8C-BE2C-33683B1EB9AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77528C1F-2E37-4D8C-BE2C-33683B1EB9AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -246,7 +240,6 @@ Global
 		{618B95DB-3A70-4DC8-BD87-00F636F72453} = {A83D6B58-6D38-46AF-8C20-5CFC170A1063}
 		{BC9E7408-508D-482D-8602-96E76ACBB5EA} = {A83D6B58-6D38-46AF-8C20-5CFC170A1063}
 		{04935FA6-E48B-496F-8D6A-41A59232303D} = {A83D6B58-6D38-46AF-8C20-5CFC170A1063}
-		{0CCE83BA-8B8B-4B98-8846-B62A61FDF170} = {A83D6B58-6D38-46AF-8C20-5CFC170A1063}
 		{ED37372C-DFBF-4720-BD4B-CE1415961038} = {A83D6B58-6D38-46AF-8C20-5CFC170A1063}
 		{4330D46F-6703-4BA2-844D-177F722C0820} = {A83D6B58-6D38-46AF-8C20-5CFC170A1063}
 		{6785A554-BBBB-480C-8E4D-9FE90DD91A46} = {A83D6B58-6D38-46AF-8C20-5CFC170A1063}

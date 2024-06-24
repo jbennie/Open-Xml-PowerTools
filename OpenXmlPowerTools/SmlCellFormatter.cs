@@ -4,13 +4,23 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
+//using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using DocumentFormat.OpenXml.Packaging;
+
+using SixLabors.ImageSharp;
+using SixLabors.Fonts;
+using SixLabors.ImageSharp.Drawing;
+using SixLabors.ImageSharp.Drawing.Shapes;
+using SixLabors.ImageSharp.Drawing.Processing;
+
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using DocumentFormat.OpenXml.Office2016.Drawing.Command;
 
 namespace OpenXmlPowerTools
 {

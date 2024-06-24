@@ -3,8 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
+//using System.Drawing;
+//using System.Drawing.Imaging;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.Fonts;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -132,7 +136,8 @@ namespace OxPt
             var rootTempDir = TestUtil.TempDir;
             var thisTestTempDir = new DirectoryInfo(Path.Combine(rootTempDir.FullName, testId));
             if (thisTestTempDir.Exists)
-                Assert.True(false, "Duplicate test id: " + testId);
+                Assert.Fail("Duplicate test id: " + testId);
+               // Assert.True(false, "Duplicate test id: " + testId);
             else
                 thisTestTempDir.Create();
 
@@ -154,10 +159,14 @@ namespace OxPt
                     var wml1 = new WmlDocument(revisedDocx.FullName);
                     var wml2 = WordprocessingMLUtil.BreakLinkToTemplate(wml1);
                     wml2.SaveAs(revisedCopiedToDestDocx.FullName);
+
+                    var tmp = new DocumentFormat.OpenXml.Wordprocessing.Color();
+                    tmp.Val  = z.Element("Color").Value;
+
                     return new WmlRevisedDocumentInfo()
                     {
                         RevisedDocument = new WmlDocument(revisedCopiedToDestDocx.FullName),
-                        Color = ColorParser.FromName(z.Element("Color")?.Value),
+                        Color =  tmp,
                         Revisor = z.Element("Revisor")?.Value,
                     };
                 })
@@ -255,7 +264,8 @@ namespace OxPt
             }
 
             if (validationErrors != "")
-                Assert.True(false, validationErrors);
+                Assert.Fail(validationErrors);
+              //  Assert.True(false, validationErrors);
         }
 
         [Theory]
@@ -352,7 +362,8 @@ namespace OxPt
             var rootTempDir = TestUtil.TempDir;
             var thisTestTempDir = new DirectoryInfo(Path.Combine(rootTempDir.FullName, testId));
             if (thisTestTempDir.Exists)
-                Assert.True(false, "Duplicate test id: " + testId);
+                Assert.Fail("Duplicate test id: " + testId);
+               // Assert.True(false, "Duplicate test id: " + testId);
             else
                 thisTestTempDir.Create();
 
@@ -404,15 +415,23 @@ namespace OxPt
             WmlDocument comparedWml = WmlComparer.Compare(source1Wml, source2Wml, settings);
             WordprocessingMLUtil.BreakLinkToTemplate(comparedWml).SaveAs(docxWithRevisionsFi.FullName);
 
+            var tmpcolor = new DocumentFormat.OpenXml.Wordprocessing.Color() { Val = "#ADD8E6" };
+
+
             List<WmlRevisedDocumentInfo> revisedDocInfo = new List<WmlRevisedDocumentInfo>()
             {
+
+
+
                 new WmlRevisedDocumentInfo()
                 {
                     RevisedDocument = source2Wml,
-                    Color = Color.LightBlue,
+                    Color = tmpcolor,
                     Revisor = "Revised by Eric White",
                 }
             };
+
+
             WmlDocument consolidatedWml = WmlComparer.Consolidate(
                 source1Wml,
                 revisedDocInfo,
@@ -484,7 +503,7 @@ namespace OxPt
 
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             if (validationErrors != "")
-                Assert.True(false, validationErrors);
+                Assert.Fail(validationErrors);
         }
 
         [Theory]
@@ -610,7 +629,8 @@ namespace OxPt
             var rootTempDir = TestUtil.TempDir;
             var thisTestTempDir = new DirectoryInfo(Path.Combine(rootTempDir.FullName, testId));
             if (thisTestTempDir.Exists)
-                Assert.True(false, "Duplicate test id???");
+                Assert.Fail("Duplicate test id: " + testId);
+           // Assert.True(false, "Duplicate test id???");
             else
                 thisTestTempDir.Create();
 
@@ -747,7 +767,9 @@ namespace OxPt
 
             if (validationErrors != "")
             {
-                Assert.True(false, validationErrors);
+                Assert.Fail(validationErrors);
+
+              //  Assert.True(false, validationErrors);
             }
 
             WmlComparerSettings settings2 = new WmlComparerSettings();
@@ -793,9 +815,11 @@ namespace OxPt
             }
 
             if (sanityCheck1.Count() != 0)
-                Assert.True(false, "Sanity Check #1 failed");
+                Assert.Fail("Sanity Check #1 failed");
+              //  Assert.True(false, "Sanity Check #1 failed");
             if (sanityCheck2.Count() != 0)
-                Assert.True(false, "Sanity Check #2 failed");
+                Assert.Fail("Sanity Check #2 failed");
+                //Assert.True(false, "Sanity Check #2 failed");
         }
 
 #if false
@@ -896,7 +920,8 @@ namespace OxPt
             var rootTempDir = TestUtil.TempDir;
             var thisTestTempDir = new DirectoryInfo(Path.Combine(rootTempDir.FullName, testId));
             if (thisTestTempDir.Exists)
-                Assert.True(false, "Duplicate test id???");
+                Assert.Fail("Duplicate test id: " + testId);
+               // Assert.True(false, "Duplicate test id???");
             else
                 thisTestTempDir.Create();
 
@@ -933,7 +958,7 @@ namespace OxPt
             var rootTempDir = TestUtil.TempDir;
             var thisTestTempDir = new DirectoryInfo(Path.Combine(rootTempDir.FullName, testId));
             if (thisTestTempDir.Exists)
-                Assert.True(false, "Duplicate test id???");
+                Assert.Fail("Duplicate test id???");
             else
                 thisTestTempDir.Create();
 
@@ -1109,6 +1134,7 @@ namespace OxPt
             }
         }
     }
+    
 }
 
 #endif

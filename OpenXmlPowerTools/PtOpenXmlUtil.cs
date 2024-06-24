@@ -12,9 +12,19 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Collections.Generic;
 using DocumentFormat.OpenXml.Packaging;
-using System.Drawing;
-using Font = System.Drawing.Font;
-using FontFamily = System.Drawing.FontFamily;
+//using System.Drawing;
+//using Font = System.Drawing.Font;
+//using FontFamily = System.Drawing.FontFamily;
+
+using SixLabors.ImageSharp;
+using SixLabors.Fonts;
+using SixLabors.ImageSharp.Drawing;
+using SixLabors.ImageSharp.Drawing.Shapes;
+using SixLabors.ImageSharp.Drawing.Processing;
+
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using DocumentFormat.OpenXml.Office2016.Drawing.Command;
 
 // ReSharper disable InconsistentNaming
 
@@ -637,7 +647,7 @@ namespace OpenXmlPowerTools
             if (KnownFamilies == null)
             {
                 KnownFamilies = new HashSet<string>();
-                var families = FontFamily.Families;
+                var families = SystemFonts.Families;
                 foreach (var fam in families)
                     KnownFamilies.Add(fam.Name);
             }
@@ -671,7 +681,7 @@ namespace OpenXmlPowerTools
             FontFamily ff;
             try
             {
-                ff = new FontFamily(fontName);
+                ff = SystemFonts.Get(fontName);
             }
             catch (ArgumentException)
             {

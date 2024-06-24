@@ -14,9 +14,23 @@ using System.IO.Packaging;
 using System.Text;
 using System.Xml.Linq;
 using DocumentFormat.OpenXml.Packaging;
-using System.Drawing;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Wordprocessing;
+
+//using System.Drawing;
 using System.Security.Cryptography;
 using OpenXmlPowerTools;
+
+using SixLabors.ImageSharp;
+using SixLabors.Fonts;
+using SixLabors.ImageSharp.Drawing;
+using SixLabors.ImageSharp.Drawing.Shapes;
+using SixLabors.ImageSharp.Drawing.Processing;
+
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using DocumentFormat.OpenXml.Office2016.Drawing.Command;
+using DocumentFormat.OpenXml.Experimental;
 
 // It is possible to optimize DescendantContentAtoms
 
@@ -79,7 +93,7 @@ namespace OpenXmlPowerTools
     {
         public WmlDocument RevisedDocument;
         public string Revisor;
-        public Color Color;
+        public DocumentFormat.OpenXml.Wordprocessing.Color Color;
     }
 
     public static class WmlComparer
@@ -104,9 +118,9 @@ namespace OpenXmlPowerTools
             {
                 var name1 = "Source1-Step1-PreProcess.docx";
                 var name2 = "Source2-Step1-PreProcess.docx";
-                var preProcFi1 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name1));
+                var preProcFi1 = new FileInfo(System.IO.Path.Combine(settings.DebugTempFileDi.FullName, name1));
                 source1.SaveAs(preProcFi1.FullName);
-                var preProcFi2 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name2));
+                var preProcFi2 = new FileInfo(System.IO.Path.Combine(settings.DebugTempFileDi.FullName, name2));
                 source2.SaveAs(preProcFi2.FullName);
             }
 
@@ -151,9 +165,9 @@ namespace OpenXmlPowerTools
             {
                 var name1 = "Source1-Step2-AfterAccepting.docx";
                 var name2 = "Source2-Step2-AfterRejecting.docx";
-                var afterAcceptingFi1 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name1));
+                var afterAcceptingFi1 = new FileInfo(System.IO.Path.Combine(settings.DebugTempFileDi.FullName, name1));
                 source1afterAccepting.SaveAs(afterAcceptingFi1.FullName);
-                var afterRejectingFi2 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name2));
+                var afterRejectingFi2 = new FileInfo(System.IO.Path.Combine(settings.DebugTempFileDi.FullName, name2));
                 source2afterRejecting.SaveAs(afterRejectingFi2.FullName);
             }
 
@@ -166,9 +180,9 @@ namespace OpenXmlPowerTools
             {
                 var name1 = "Source1-Step3-AfterHashing.docx";
                 var name2 = "Source2-Step3-AfterHashing.docx";
-                var afterHashingFi1 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name1));
+                var afterHashingFi1 = new FileInfo(System.IO.Path.Combine(settings.DebugTempFileDi.FullName, name1));
                 source1.SaveAs(afterHashingFi1.FullName);
-                var afterHashingFi2 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name2));
+                var afterHashingFi2 = new FileInfo(System.IO.Path.Combine(settings.DebugTempFileDi.FullName, name2));
                 source2.SaveAs(afterHashingFi2.FullName);
             }
 
@@ -180,9 +194,9 @@ namespace OpenXmlPowerTools
             {
                 var name1 = "Source1-Step4-AfterAccepting.docx";
                 var name2 = "Source2-Step4-AfterAccepting.docx";
-                var afterAcceptingFi1 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name1));
+                var afterAcceptingFi1 = new FileInfo(System.IO.Path.Combine(settings.DebugTempFileDi.FullName, name1));
                 source1.SaveAs(afterAcceptingFi1.FullName);
-                var afterAcceptingFi2 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name2));
+                var afterAcceptingFi2 = new FileInfo(System.IO.Path.Combine(settings.DebugTempFileDi.FullName, name2));
                 source2.SaveAs(afterAcceptingFi2.FullName);
             }
 
@@ -216,10 +230,10 @@ namespace OpenXmlPowerTools
                 {
                     var name1 = "Source1-Step5-AfterProducingDocWithRevTrk.docx";
                     var name2 = "Source2-Step5-AfterProducingDocWithRevTrk.docx";
-                    var afterProducingFi1 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name1));
+                    var afterProducingFi1 = new FileInfo(System.IO.Path.Combine(settings.DebugTempFileDi.FullName, name1));
                     var afterProducingWml1 = new WmlDocument("after1.docx", ms1.ToArray());
                     afterProducingWml1.SaveAs(afterProducingFi1.FullName);
-                    var afterProducingFi2 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name2));
+                    var afterProducingFi2 = new FileInfo(System.IO.Path.Combine(settings.DebugTempFileDi.FullName, name2));
                     var afterProducingWml2 = new WmlDocument("after2.docx", ms2.ToArray());
                     afterProducingWml2.SaveAs(afterProducingFi2.FullName);
                 }
@@ -228,12 +242,12 @@ namespace OpenXmlPowerTools
                 {
                     var cleanedSource = CleanPowerToolsAndRsid(source1);
                     var name1 = "Cleaned-Source.docx";
-                    var cleanedSourceFi1 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name1));
+                    var cleanedSourceFi1 = new FileInfo(System.IO.Path.Combine(settings.DebugTempFileDi.FullName, name1));
                     cleanedSource.SaveAs(cleanedSourceFi1.FullName);
 
                     var cleanedProduced = CleanPowerToolsAndRsid(producedDocument);
                     var name2 = "Cleaned-Produced.docx";
-                    var cleanedProducedFi1 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name2));
+                    var cleanedProducedFi1 = new FileInfo(System.IO.Path.Combine(settings.DebugTempFileDi.FullName, name2));
                     cleanedProduced.SaveAs(cleanedProducedFi1.FullName);
                 }
 
@@ -503,7 +517,7 @@ namespace OpenXmlPowerTools
         private class ConsolidationInfo
         {
             public string Revisor;
-            public Color Color;
+            public DocumentFormat.OpenXml.Wordprocessing.Color Color;
             public XElement RevisionElement;
             public bool InsertBefore = false;
             public string RevisionHash;
@@ -584,7 +598,7 @@ namespace OpenXmlPowerTools
             if (s_SaveIntermediateFilesForDebugging && settings.DebugTempFileDi != null)
             {
                 var name1 = "Original-with-Unids.docx";
-                var preProcFi1 = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name1));
+                var preProcFi1 = new FileInfo(System.IO.Path.Combine(settings.DebugTempFileDi.FullName, name1));
                 originalWithUnids.SaveAs(preProcFi1.FullName);
             }
 
@@ -624,12 +638,12 @@ namespace OpenXmlPowerTools
                         if (s_SaveIntermediateFilesForDebugging && settings.DebugTempFileDi != null)
                         {
                             var name1 = string.Format("Delta-{0}.docx", deltaNbr++);
-                            var deltaFi = new FileInfo(Path.Combine(settings.DebugTempFileDi.FullName, name1));
+                            var deltaFi = new FileInfo(System.IO.Path.Combine(settings.DebugTempFileDi.FullName, name1));
                             delta.SaveAs(deltaFi.FullName);
                         }
 
-                        var colorRgb = revisedDocumentInfo.Color.ToArgb();
-                        var colorString = colorRgb.ToString("X");
+                        var colorRgb = revisedDocumentInfo.Color;
+                        var colorString = colorRgb.ToString();// ("X");
                         if (colorString.Length == 8)
                             colorString = colorString.Substring(2);
 
@@ -1139,8 +1153,8 @@ namespace OpenXmlPowerTools
                         new XElement(W.bCs)),
                     new XElement(W.t, revisor)));
 
-            var colorRgb = groupedCi.First().Color.ToArgb();
-            var colorString = colorRgb.ToString("X");
+            var colorRgb = groupedCi.First().Color;//.ToArgb();
+            string colorString = colorRgb.ToString(); //.ToString("X");
             if (colorString.Length == 8)
                 colorString = colorString.Substring(2);
 
@@ -1338,8 +1352,8 @@ namespace OpenXmlPowerTools
             ConsolidationInfo consolidationInfo,
             WmlComparerSettings settings)
         {
-            Package packageOfDeletedContent = wDocDelta.MainDocumentPart.OpenXmlPackage.Package;
-            Package packageOfNewContent = consolidatedWDoc.MainDocumentPart.OpenXmlPackage.Package;
+            Package packageOfDeletedContent = ((Package)wDocDelta.MainDocumentPart.OpenXmlPackage.GetPackage());
+            Package packageOfNewContent = ((Package)consolidatedWDoc.MainDocumentPart.OpenXmlPackage.GetPackage());
             PackagePart partInDeletedDocument = packageOfDeletedContent.GetPart(wDocDelta.MainDocumentPart.Uri);
             PackagePart partInNewDocument = packageOfNewContent.GetPart(consolidatedWDoc.MainDocumentPart.Uri);
             consolidationInfo.RevisionElement = MoveRelatedPartsToDestination(partInDeletedDocument, partInNewDocument, consolidationInfo.RevisionElement);
@@ -4605,8 +4619,8 @@ namespace OpenXmlPowerTools
                                         var openXmlPartInNewDocument = part;
                                         return gc.Select(gce =>
                                         {
-                                            Package packageOfDeletedContent = openXmlPartOfDeletedContent.OpenXmlPackage.Package;
-                                            Package packageOfNewContent = openXmlPartInNewDocument.OpenXmlPackage.Package;
+                                            Package packageOfDeletedContent = ((Package)openXmlPartOfDeletedContent.OpenXmlPackage.GetPackage());
+                                            Package packageOfNewContent = ((Package)openXmlPartInNewDocument.OpenXmlPackage.GetPackage());
                                             PackagePart partInDeletedDocument = packageOfDeletedContent.GetPart(part.Uri);
                                             PackagePart partInNewDocument = packageOfNewContent.GetPart(part.Uri);
                                             return MoveRelatedPartsToDestination(partInDeletedDocument, partInNewDocument, newDrawing);
@@ -4624,8 +4638,8 @@ namespace OpenXmlPowerTools
                                         var openXmlPartInNewDocument = part;
                                         return gc.Select(gce =>
                                         {
-                                            Package packageOfSourceContent = openXmlPartOfInsertedContent.OpenXmlPackage.Package;
-                                            Package packageOfNewContent = openXmlPartInNewDocument.OpenXmlPackage.Package;
+                                            Package packageOfSourceContent = ((Package)openXmlPartOfInsertedContent.OpenXmlPackage.GetPackage());
+                                            Package packageOfNewContent = ((Package)openXmlPartInNewDocument.OpenXmlPackage.GetPackage());
                                             PackagePart partInDeletedDocument = packageOfSourceContent.GetPart(part.Uri);
                                             PackagePart partInNewDocument = packageOfNewContent.GetPart(part.Uri);
                                             return MoveRelatedPartsToDestination(partInDeletedDocument, partInNewDocument, newDrawing);
@@ -7533,9 +7547,9 @@ namespace OpenXmlPowerTools
     {
         public static void NotePad(string str)
         {
-            var tempPath = Path.GetTempPath();
+            var tempPath = System.IO.Path.GetTempPath();
             var guidName = Guid.NewGuid().ToString().Replace("-", "") + ".txt";
-            var fi = new FileInfo(Path.Combine(tempPath, guidName));
+            var fi = new FileInfo(System.IO.Path.Combine(tempPath, guidName));
             File.WriteAllText(fi.FullName, str);
             var notepadExe = new FileInfo(@"C:\Program Files (x86)\Notepad++\notepad++.exe");
             if (!notepadExe.Exists)
